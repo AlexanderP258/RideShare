@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Security ###
+.env
+src/main/resources/mykeystore.p12
