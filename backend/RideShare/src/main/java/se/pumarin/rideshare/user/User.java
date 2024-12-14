@@ -1,11 +1,14 @@
 package se.pumarin.rideshare.user;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "users")
+@Builder@Table(name = "users")
 public class User {
 
     @Id
