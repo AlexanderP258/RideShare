@@ -56,4 +56,25 @@ public class RideService {
                 .filter(r -> afterDate == null || r.getDepartureTime().isAfter(afterDate))
                 .toList();
     }
+
+    public void joinRide(Long rideId, String username) {
+        Ride ride = rideRepository.findById(rideId)
+                .orElseThrow(() -> new IllegalArgumentException("Ride not found"));
+
+        if (ride.getAvailableSeats() <= 0) {
+            throw new IllegalArgumentException("No seats available for this ride.");
+        }
+
+        User user = userService.findByUsername(username);
+
+        boolean alreadyJoined = ride.getPassengers().stream()
+                .anyMatch(p -> p.getId().equals(user.getId()));
+        if (alreadyJoined) {
+            throw new IllegalArgumentException("You have already joined this ride.");
+        }
+
+        ride.getPassengers().add(user);
+        ride.setAvailableSeats(ride.getAvailableSeats() - 1);
+        rideRepository.save(ride);
+    }
 }

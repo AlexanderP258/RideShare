@@ -54,4 +54,11 @@ public class RideController {
 
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/{id}/join")
+    public ResponseEntity<String> joinRide(@PathVariable Long id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        rideService.joinRide(id, username);
+        return ResponseEntity.ok("You have successfully joined the ride.");
+    }
 }
