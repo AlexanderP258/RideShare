@@ -7,6 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/rides")
 public class RideController {
@@ -31,5 +34,24 @@ public class RideController {
         );
 
         return ResponseEntity.ok(RideResponse.fromEntity(ride));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RideResponse>> listRides(
+            @RequestParam(required = false) String start,
+            @RequestParam(required = false) String end,
+            @RequestParam(required = false) String date
+    ) {
+        LocalDateTime afterDate = null;
+        if (date != null && !date.isBlank()) {
+            afterDate = LocalDateTime.parse(date);
+        }
+
+        List<Ride> rides = rideService.findAvailableRides(start, end, afterDate);
+        List<RideResponse> response = rides.stream()
+                .map(RideResponse::fromEntity)
+                .toList();
+
+        return ResponseEntity.ok(response);
     }
 }

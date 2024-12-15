@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @Transactional
@@ -41,5 +42,18 @@ public class RideService {
                 .build();
 
         return rideRepository.save(ride);
+    }
+
+    public List<Ride> findAvailableRides(String start, String end, LocalDateTime afterDate) {
+        LocalDateTime now = LocalDateTime.now();
+        List<Ride> allRides = rideRepository.findAll();
+
+        return allRides.stream()
+                .filter(r -> r.getDepartureTime().isAfter(now))
+                .filter(r -> r.getAvailableSeats() > 0)
+                .filter(r -> start == null || start.isBlank() || r.getStartLocation().equalsIgnoreCase(start))
+                .filter(r -> end == null || end.isBlank() || r.getEndLocation().equalsIgnoreCase(end))
+                .filter(r -> afterDate == null || r.getDepartureTime().isAfter(afterDate))
+                .toList();
     }
 }
