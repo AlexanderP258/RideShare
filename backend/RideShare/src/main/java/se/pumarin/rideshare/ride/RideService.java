@@ -77,4 +77,21 @@ public class RideService {
         ride.setAvailableSeats(ride.getAvailableSeats() - 1);
         rideRepository.save(ride);
     }
+
+    public List<Ride> findRidesByDriverUsername(String driverUsername) {
+        LocalDateTime now = LocalDateTime.now();
+
+
+        return rideRepository.findAll().stream()
+                .filter(r -> r.getDriver().getUsername().equalsIgnoreCase(driverUsername))
+                .toList();
+    }
+
+    public List<Ride> findRidesUserHasJoined(String username) {
+        User user = userService.findByUsername(username);
+
+        return rideRepository.findAll().stream()
+                .filter(r -> r.getPassengers().stream().anyMatch(p -> p.getId().equals(user.getId())))
+                .toList();
+    }
 }
