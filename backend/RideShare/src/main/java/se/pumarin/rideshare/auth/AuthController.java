@@ -11,6 +11,8 @@ import se.pumarin.rideshare.dto.RegisterRequest;
 import se.pumarin.rideshare.dto.TokenResponse;
 import se.pumarin.rideshare.user.UserService;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/users")
 public class AuthController {
@@ -30,7 +32,8 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
         userService.registerUser(req.getUsername(), req.getEmail(), req.getPassword());
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok(Map.of("message", "User registered successfully"));
+
     }
 
     @PostMapping("/login")
