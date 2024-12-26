@@ -11,6 +11,8 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
+
     const formData = new FormData(e.currentTarget);
 
     try {
@@ -20,8 +22,8 @@ export default function Login() {
       });
       setToken(response.token);
       router.push("/dashboard");
-    } catch (err) {
-      setError("Login failed. Please check your credentials.");
+    } catch (err: any) {
+      setError(err.message || "Login failed. Please check your credentials.");
     }
   };
 
