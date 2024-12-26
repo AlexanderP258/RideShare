@@ -7,20 +7,33 @@ import { authApi } from "../api/auth";
 export default function Register() {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setError("");
+    setSuccess("");
+
     const formData = new FormData(e.currentTarget);
 
     try {
-      await authApi.register({
+      const response = await authApi.register({
         username: formData.get("username") as string,
         email: formData.get("email") as string,
         password: formData.get("password") as string,
       });
-      router.push("/login");
-    } catch (err) {
-      setError("Registration failed. Please try again.");
+
+      if (response.message) {
+        setSuccess(response.message);
+      } else {
+        setSuccess("Registration successful!");
+      }
+
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
+    } catch (err: any) {
+      setError(err.message || "Registration failed. Please try again.");
     }
   };
 
@@ -29,6 +42,8 @@ export default function Register() {
       <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
         <h2 className="text-center text-3xl font-bold">Register</h2>
         {error && <div className="text-red-500 text-center">{error}</div>}
+        {success && <div className="text-green-500 text-center">{success}</div>}
+
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div className="rounded-md shadow-sm space-y-4">
             <input
