@@ -5,7 +5,12 @@ export const authApi = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    if (!response.ok) throw new Error("Registration failed");
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || "Registration failed");
+    }
+
     return response.json();
   },
 
@@ -15,7 +20,12 @@ export const authApi = {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
-    if (!response.ok) throw new Error("Login failed");
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || "Login failed");
+    }
+
     return response.json();
   },
 };
