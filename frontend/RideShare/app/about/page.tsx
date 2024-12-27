@@ -30,7 +30,6 @@ const ValueCard = ({
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       <div className="relative bg-gradient-to-br from-green-50 to-green-100">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-green-200/30 blur-3xl" />
