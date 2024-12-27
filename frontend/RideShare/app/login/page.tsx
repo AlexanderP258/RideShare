@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authApi } from "@/app/api/auth";
 import { useAuth } from "@/app/context/AuthContext";
@@ -92,7 +93,12 @@ export default function Login() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-b from-white to-gray-100 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md mb-6">
+        <Link href="/" className="flex items-center space-x-3">
+          <span className="text-xl font-bold text-green-600">RideShare</span>
+        </Link>
+      </div>
       <div className="w-full max-w-md space-y-6">
         <div className="rounded-lg border bg-white text-gray-900 shadow-lg">
           {/* Header */}
@@ -198,16 +204,16 @@ export default function Login() {
           <div className="p-6 pt-0">
             <div className="text-sm text-center text-gray-500">
               Don&apos;t have an account?{" "}
-              <a
+              <Link
                 href="/register"
                 className="text-emerald-600 hover:text-emerald-700 font-medium"
               >
                 Register here
-              </a>
+              </Link>
             </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
