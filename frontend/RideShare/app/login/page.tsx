@@ -83,7 +83,7 @@ export default function Login() {
       });
 
       setToken(response.token);
-      router.push("/dashboard");
+      router.push("/");
     } catch (err: any) {
       setError(err.message || "Login failed. Please check your credentials.");
     } finally {

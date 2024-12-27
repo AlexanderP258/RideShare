@@ -28,16 +28,16 @@ const Header = () => {
 
           <nav className="hidden md:flex items-center space-x-8">
             <Link
+              href="/rides"
+              className="text-gray-600 hover:text-green-600 font-medium transition-colors"
+            >
+              View all Rides
+            </Link>
+            <Link
               href="/about"
               className="text-gray-600 hover:text-green-600 font-medium transition-colors"
             >
               About Us
-            </Link>
-            <Link
-              href="/book"
-              className="text-gray-600 hover:text-green-600 font-medium transition-colors"
-            >
-              Book Your Ride
             </Link>
           </nav>
 
