@@ -49,4 +49,24 @@ export const ridesApi = {
     }
     return response.json();
   },
+
+  async joinRide(token: string, rideId: number) {
+    const response = await fetch(
+      `http://localhost:8080/api/rides/${rideId}/join`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(errorText || "Failed to join ride");
+    }
+
+    return response.json();
+  },
 };

@@ -28,6 +28,8 @@ export default function RidesPage() {
   const [rides, setRides] = useState<Ride[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [joinError, setJoinError] = useState("");
+  const [joinMessage, setJoinMessage] = useState("");
 
   useEffect(() => {
     if (!token) {
@@ -42,8 +44,10 @@ export default function RidesPage() {
   }, [token]);
 
   const fetchRides = async () => {
-    setError("");
     setIsLoading(true);
+    setError("");
+    setJoinError("");
+    setJoinMessage("");
     try {
       const data = await ridesApi.getRides(token, { start, end, date });
       setRides(data);
@@ -58,6 +62,30 @@ export default function RidesPage() {
     e.preventDefault();
     if (!token) return;
     fetchRides();
+  };
+
+  const handleJoinRide = async (rideId: number) => {
+    if (!token) {
+      setJoinError("You must be logged in to join a ride.");
+      return;
+    }
+
+    setJoinError("");
+    setJoinMessage("");
+
+    try {
+      const result = await ridesApi.joinRide(token, rideId);
+
+      if (typeof result === "object" && result.message) {
+        setJoinMessage(result.message);
+      } else {
+        setJoinMessage("You have successfully joined the ride!");
+      }
+
+      fetchRides();
+    } catch (err: any) {
+      setJoinError(err.message || "Failed to join ride");
+    }
   };
 
   if (!token) {
@@ -162,6 +190,16 @@ export default function RidesPage() {
             {error}
           </div>
         )}
+        {joinError && (
+          <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
+            {joinError}
+          </div>
+        )}
+        {joinMessage && (
+          <div className="rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-600">
+            {joinMessage}
+          </div>
+        )}
 
         {isLoading && (
           <p className="text-center text-gray-600">Loading rides...</p>
@@ -194,6 +232,14 @@ export default function RidesPage() {
                     <span className="font-medium">Price:</span> {ride.price} Kr
                   </p>
                 </div>
+                {ride.availableSeats > 0 && (
+                  <button
+                    onClick={() => handleJoinRide(ride.id)}
+                    className="mt-3 inline-block px-4 py-2 rounded bg-emerald-600 text-white hover:bg-emerald-700"
+                  >
+                    Join Ride
+                  </button>
+                )}
               </li>
             ))}
           </ul>
