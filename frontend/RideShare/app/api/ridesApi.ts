@@ -14,7 +14,6 @@ export const ridesApi = {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          // Attach the token if present
           Authorization: `Bearer ${token}`,
         },
       }
@@ -22,6 +21,31 @@ export const ridesApi = {
 
     if (!response.ok) {
       throw new Error("Failed to fetch rides");
+    }
+    return response.json();
+  },
+
+  async createRide(
+    token: string,
+    rideData: {
+      startLocation: string;
+      endLocation: string;
+      departureTime: string;
+      availableSeats: number;
+      price: number;
+    }
+  ) {
+    const response = await fetch("http://localhost:8080/api/rides", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(rideData),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create ride");
     }
     return response.json();
   },

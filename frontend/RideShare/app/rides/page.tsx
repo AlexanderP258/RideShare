@@ -191,7 +191,7 @@ export default function RidesPage() {
                     {ride.availableSeats}
                   </p>
                   <p>
-                    <span className="font-medium">Price:</span> ${ride.price}
+                    <span className="font-medium">Price:</span> {ride.price} Kr
                   </p>
                 </div>
               </li>
