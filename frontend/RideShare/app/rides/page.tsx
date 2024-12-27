@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ridesApi } from "@/app/api/ridesApi";
 import { useAuth } from "@/app/context/AuthContext";
-import { CalendarDays, MapPin, Search } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { CalendarDays, MapPin } from "lucide-react";
 
 interface Ride {
   id: number;
@@ -99,88 +98,66 @@ export default function RidesPage() {
           Available Rides
         </h1>
 
-        <div className="rounded-lg border bg-white shadow-lg p-4">
-          <form
-            onSubmit={handleSearch}
-            className="grid grid-cols-1 md:grid-cols-4 gap-4"
-          >
-            <div>
-              <label
-                htmlFor="start"
-                className="text-sm font-medium text-gray-700"
-              >
-                Start Location
-              </label>
-              <div className="relative mt-1">
-                <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                <input
-                  id="start"
-                  type="text"
-                  placeholder="City A"
-                  value={start}
-                  onChange={(e) => setStart(e.target.value)}
-                  className={cn(
-                    "pl-10 w-full rounded-md border border-gray-200 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-                  )}
-                />
-              </div>
-            </div>
+        <div className="mx-auto max-w-3xl">
+          <form onSubmit={handleSearch} className="relative">
+            <div className="overflow-hidden rounded-2xl bg-white shadow-xl">
+              <div className="grid gap-4 p-6 sm:grid-cols-2 md:grid-cols-3">
+                <div className="relative">
+                  <label className="block text-sm font-medium text-gray-700">
+                    From
+                  </label>
+                  <div className="mt-1 flex items-center">
+                    <MapPin className="absolute left-3 h-5 w-5 text-gray-400" />
+                    <input
+                      type="text"
+                      value={start}
+                      onChange={(e) => setStart(e.target.value)}
+                      className="block w-full rounded-lg border-gray-300 pl-10 text-sm shadow-sm focus:border-green-500 focus:ring-green-500"
+                      placeholder="Departure city"
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <label
-                htmlFor="end"
-                className="text-sm font-medium text-gray-700"
-              >
-                End Location
-              </label>
-              <div className="relative mt-1">
-                <MapPin className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                <input
-                  id="end"
-                  type="text"
-                  placeholder="City B"
-                  value={end}
-                  onChange={(e) => setEnd(e.target.value)}
-                  className={cn(
-                    "pl-10 w-full rounded-md border border-gray-200 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-                  )}
-                />
-              </div>
-            </div>
+                <div className="relative">
+                  <label className="block text-sm font-medium text-gray-700">
+                    To
+                  </label>
+                  <div className="mt-1 flex items-center">
+                    <MapPin className="absolute left-3 h-5 w-5 text-gray-400" />
+                    <input
+                      type="text"
+                      value={end}
+                      onChange={(e) => setEnd(e.target.value)}
+                      className="block w-full rounded-lg border-gray-300 pl-10 text-sm shadow-sm focus:border-green-500 focus:ring-green-500"
+                      placeholder="Destination city"
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <label
-                htmlFor="date"
-                className="text-sm font-medium text-gray-700"
-              >
-                Departure Date
-              </label>
-              <div className="relative mt-1">
-                <CalendarDays className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                <input
-                  id="date"
-                  type="date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className={cn(
-                    "pl-10 w-full rounded-md border border-gray-200 px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-                  )}
-                />
+                <div className="relative">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Date
+                  </label>
+                  <div className="mt-1 flex items-center">
+                    <CalendarDays className="absolute left-3 h-5 w-5 text-gray-400" />
+                    <input
+                      type="date"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      className="block w-full rounded-lg border-gray-300 pl-10 text-sm shadow-sm focus:border-green-500 focus:ring-green-500"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
 
-            <div className="flex items-end">
-              <button
-                type="submit"
-                className={cn(
-                  "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors",
-                  "bg-emerald-600 text-white hover:bg-emerald-700",
-                  "h-10 w-full"
-                )}
-              >
-                <Search className="h-4 w-4 mr-2" />
-                Search
-              </button>
+              <div className="bg-gray-50 px-6 py-4">
+                <button
+                  type="submit"
+                  className="w-full rounded-lg bg-green-600 px-4 py-3 text-sm font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+                >
+                  Search Rides
+                </button>
+              </div>
             </div>
           </form>
         </div>

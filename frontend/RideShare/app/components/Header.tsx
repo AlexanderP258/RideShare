@@ -44,12 +44,12 @@ const Header = () => {
           </nav>
 
           <div className="flex items-center space-x-6">
-            <button
+            {/* <button
               className="text-gray-600 hover:text-green-600 transition-colors"
               aria-label="Search"
             >
               <Search className="h-5 w-5" />
-            </button>
+            </button> */}
 
             <Link
               href="/create-ride"

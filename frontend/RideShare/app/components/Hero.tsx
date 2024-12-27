@@ -2,8 +2,10 @@
 
 import React, { useState } from "react";
 import { Calendar, MapPin, Users } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     from: "",
     to: "",
@@ -11,20 +13,26 @@ const Hero = () => {
     passengers: "1",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Search submitted:", formData);
+
+    const queryParams = new URLSearchParams({
+      start: formData.from,
+      end: formData.to,
+      date: formData.date,
+      passengers: formData.passengers,
+    }).toString();
+
+    router.push(`/rides?${queryParams}`);
   };
 
   return (
     <div className="relative min-h-[600px] w-full bg-gradient-to-br from-green-50 to-green-100">
-      {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-green-200/30 blur-3xl" />
         <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-green-200/30 blur-3xl" />
       </div>
 
-      {/* Content container */}
       <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
@@ -37,12 +45,10 @@ const Hero = () => {
           </p>
         </div>
 
-        {/* Search form */}
         <div className="mx-auto mt-12 max-w-3xl">
           <form onSubmit={handleSubmit} className="relative">
             <div className="overflow-hidden rounded-2xl bg-white shadow-xl">
               <div className="grid gap-4 p-6 sm:grid-cols-2 md:grid-cols-4">
-                {/* From field */}
                 <div className="relative">
                   <label className="block text-sm font-medium text-gray-700">
                     From
@@ -51,6 +57,7 @@ const Hero = () => {
                     <MapPin className="absolute left-3 h-5 w-5 text-gray-400" />
                     <input
                       type="text"
+                      required
                       value={formData.from}
                       onChange={(e) =>
                         setFormData({ ...formData, from: e.target.value })
@@ -61,7 +68,6 @@ const Hero = () => {
                   </div>
                 </div>
 
-                {/* To field */}
                 <div className="relative">
                   <label className="block text-sm font-medium text-gray-700">
                     To
@@ -70,6 +76,7 @@ const Hero = () => {
                     <MapPin className="absolute left-3 h-5 w-5 text-gray-400" />
                     <input
                       type="text"
+                      required
                       value={formData.to}
                       onChange={(e) =>
                         setFormData({ ...formData, to: e.target.value })
@@ -80,7 +87,6 @@ const Hero = () => {
                   </div>
                 </div>
 
-                {/* Date field */}
                 <div className="relative">
                   <label className="block text-sm font-medium text-gray-700">
                     Date
@@ -89,6 +95,7 @@ const Hero = () => {
                     <Calendar className="absolute left-3 h-5 w-5 text-gray-400" />
                     <input
                       type="date"
+                      required
                       value={formData.date}
                       onChange={(e) =>
                         setFormData({ ...formData, date: e.target.value })
@@ -98,7 +105,6 @@ const Hero = () => {
                   </div>
                 </div>
 
-                {/* Passengers field */}
                 <div className="relative">
                   <label className="block text-sm font-medium text-gray-700">
                     Passengers
@@ -122,7 +128,6 @@ const Hero = () => {
                 </div>
               </div>
 
-              {/* Search button */}
               <div className="bg-gray-50 px-6 py-4">
                 <button
                   type="submit"
@@ -135,7 +140,6 @@ const Hero = () => {
           </form>
         </div>
 
-        {/* Stats */}
         <div className="mt-16 grid grid-cols-3 gap-8 text-center">
           {[
             { value: "50+", label: "Active Users" },
