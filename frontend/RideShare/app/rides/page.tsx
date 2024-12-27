@@ -45,7 +45,7 @@ export default function RidesPage() {
     setError("");
     setIsLoading(true);
     try {
-      const data = await ridesApi.getRides(token!, { start, end, date });
+      const data = await ridesApi.getRides(token, { start, end, date });
       setRides(data);
     } catch (err: any) {
       setError(err.message || "Failed to load rides");
