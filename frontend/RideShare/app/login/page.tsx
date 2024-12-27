@@ -21,7 +21,7 @@ const Input = ({ className, ...props }: InputProps) => {
   return (
     <input
       className={cn(
-        "flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        "flex h-10 w-full rounded-md border border-gray-200 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500",
         className
       )}
       {...props}
@@ -38,7 +38,7 @@ const Button = ({ className, children, isLoading, ...props }: ButtonProps) => {
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center rounded-md text-sm font-medium",
         "bg-emerald-600 text-white hover:bg-emerald-700",
         "h-10 px-4 py-2",
         className
@@ -84,6 +84,10 @@ export default function Login() {
       });
 
       setToken(response.token);
+      if (response.userId) {
+        localStorage.setItem("userId", String(response.userId));
+      }
+
       router.push("/");
     } catch (err: any) {
       setError(err.message || "Login failed. Please check your credentials.");
@@ -99,9 +103,9 @@ export default function Login() {
           <span className="text-xl font-bold text-green-600">RideShare</span>
         </Link>
       </div>
+
       <div className="w-full max-w-md space-y-6">
         <div className="rounded-lg border bg-white text-gray-900 shadow-lg">
-          {/* Header */}
           <div className="flex flex-col space-y-1.5 p-6">
             <div className="flex items-center justify-center space-x-2">
               <LogIn className="h-6 w-6 text-emerald-600" />
@@ -114,7 +118,6 @@ export default function Login() {
             </p>
           </div>
 
-          {/* Form */}
           <div className="p-6 pt-0">
             {error && (
               <div className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-600">
@@ -168,7 +171,6 @@ export default function Login() {
               </div>
 
               <div className="flex items-center justify-between">
-                {/* Remember me */}
                 <div className="flex items-center">
                   <input
                     id="remember"
@@ -185,7 +187,6 @@ export default function Login() {
                     Remember me
                   </label>
                 </div>
-
                 <a
                   href="#"
                   className="text-sm font-medium text-emerald-600 hover:text-emerald-700"
@@ -200,7 +201,6 @@ export default function Login() {
             </form>
           </div>
 
-          {/* Footer */}
           <div className="p-6 pt-0">
             <div className="text-sm text-center text-gray-500">
               Don&apos;t have an account?{" "}
