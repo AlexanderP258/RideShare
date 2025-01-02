@@ -13,11 +13,25 @@ export default function CreateRidePage() {
   const [endLocation, setEndLocation] = useState("");
   const [departureTime, setDepartureTime] = useState("");
   const [availableSeats, setAvailableSeats] = useState(1);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(100);
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const validCities = [
+    "Stockholm",
+    "Gothenburg",
+    "Karlstad",
+    "Malmö",
+    "Copenhagen",
+    "Berlin",
+    "Frankfurt",
+    "Paris",
+    "Barcelona",
+  ];
+
+  const validPrices = Array.from({ length: 20 }, (_, i) => 100 + i * 100);
 
   useEffect(() => {
     if (!token) {
@@ -30,14 +44,19 @@ export default function CreateRidePage() {
     setError("");
     setSuccess("");
 
-    if (!startLocation || !endLocation || !departureTime || price <= 0) {
+    if (!startLocation || !endLocation || !departureTime) {
       setError("Please fill in all fields with valid data.");
+      return;
+    }
+
+    if (price <= 0) {
+      setError("Price must be greater than 0.");
       return;
     }
 
     setIsLoading(true);
     try {
-      const result = await ridesApi.createRide(token!, {
+      await ridesApi.createRide(token!, {
         startLocation,
         endLocation,
         departureTime,
@@ -85,13 +104,20 @@ export default function CreateRidePage() {
             >
               Start Location
             </label>
-            <input
+            <select
               id="startLocation"
-              type="text"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               value={startLocation}
               onChange={(e) => setStartLocation(e.target.value)}
-            />
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
+            >
+              <option value="">-- Select City --</option>
+              {validCities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
@@ -101,13 +127,20 @@ export default function CreateRidePage() {
             >
               End Location
             </label>
-            <input
+            <select
               id="endLocation"
-              type="text"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               value={endLocation}
               onChange={(e) => setEndLocation(e.target.value)}
-            />
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
+            >
+              <option value="">-- Select City --</option>
+              {validCities.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
@@ -120,9 +153,12 @@ export default function CreateRidePage() {
             <input
               id="departureTime"
               type="datetime-local"
+              min={new Date().toISOString().slice(0, 16)}
+              step={900}
               className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               value={departureTime}
               onChange={(e) => setDepartureTime(e.target.value)}
+              required
             />
           </div>
 
@@ -140,6 +176,7 @@ export default function CreateRidePage() {
               className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               value={availableSeats}
               onChange={(e) => setAvailableSeats(Number(e.target.value))}
+              required
             />
           </div>
 
@@ -148,17 +185,21 @@ export default function CreateRidePage() {
               htmlFor="price"
               className="block mb-1 text-sm font-medium text-gray-700"
             >
-              Price per Seat
+              Price per Seat (SEK)
             </label>
-            <input
+            <select
               id="price"
-              type="number"
-              step="0.01"
-              min={0.0}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
-            />
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+              required
+            >
+              {validPrices.map((val) => (
+                <option key={val} value={val}>
+                  {val}
+                </option>
+              ))}
+            </select>
           </div>
 
           <button
