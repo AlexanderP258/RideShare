@@ -8,7 +8,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/rides")
@@ -56,9 +58,13 @@ public class RideController {
     }
 
     @PostMapping("/{id}/join")
-    public ResponseEntity<String> joinRide(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> joinRide(@PathVariable Long id) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         rideService.joinRide(id, username);
-        return ResponseEntity.ok("You have successfully joined the ride.");
+
+        Map<String, String> responseBody = new HashMap<>();
+        responseBody.put("message", "You have successfully joined the ride.");
+
+        return ResponseEntity.ok(responseBody);
     }
 }
