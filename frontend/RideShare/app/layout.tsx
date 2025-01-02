@@ -16,6 +16,14 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <head>
+        <title>RideShare - Carpooling Application</title>
+        <link rel="icon" type="image/png" href="/images/rideshare-icon.png" />
+        <meta
+          name="description"
+          content="A modern carpooling application for convenient ride sharing"
+        />
+      </head>
       <body>
         <AuthProvider>
           {!hideHeader && <Header />}
