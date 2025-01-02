@@ -94,4 +94,8 @@ public class RideService {
                 .filter(r -> r.getPassengers().stream().anyMatch(p -> p.getId().equals(user.getId())))
                 .toList();
     }
+
+    public Ride findById(Long rideId) {
+        return rideRepository.findById(rideId).orElse(null);
+    }
 }

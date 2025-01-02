@@ -32,6 +32,7 @@ dependencies {
     // Third-Party Libraries
     implementation group: 'me.paulschwarz', name: 'spring-dotenv', version: '4.0.0'
     runtimeOnly 'org.postgresql:postgresql'
+    implementation 'com.stripe:stripe-java:28.0.0'
 
     // Lombok
     compileOnly 'org.projectlombok:lombok'
