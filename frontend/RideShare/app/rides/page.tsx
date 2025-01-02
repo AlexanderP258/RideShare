@@ -211,10 +211,10 @@ export default function RidesPage() {
                 </div>
                 {ride.availableSeats > 0 && (
                   <button
-                    onClick={() => handleJoinRide(ride.id)}
+                    onClick={() => router.push(`/rides/${ride.id}/payment`)}
                     className="mt-3 inline-block px-4 py-2 rounded bg-emerald-600 text-white hover:bg-emerald-700"
                   >
-                    Join Ride
+                    Proceed to Payment
                   </button>
                 )}
               </li>
