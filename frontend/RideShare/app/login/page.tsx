@@ -7,6 +7,7 @@ import { authApi } from "@/app/api/auth";
 import { useAuth } from "@/app/context/AuthContext";
 import { Loader2, User, Lock, LogIn } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Logo from "../components/Logo";
 
 interface FormData {
   username: string;
@@ -99,11 +100,8 @@ export default function Login() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
       <div className="w-full max-w-md mb-6">
-        <Link href="/" className="flex items-center space-x-3">
-          <span className="text-xl font-bold text-green-600">RideShare</span>
-        </Link>
+        <Logo imageSize={60} textSize="text-2xl" />
       </div>
-
       <div className="w-full max-w-md space-y-6">
         <div className="rounded-lg border bg-white text-gray-900 shadow-lg">
           <div className="flex flex-col space-y-1.5 p-6">

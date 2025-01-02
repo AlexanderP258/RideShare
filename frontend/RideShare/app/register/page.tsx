@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { authApi } from "@/app/api/auth";
 import { UserPlus, Mail, Lock, User } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Logo from "../components/Logo";
 
 const Input = ({ className, ...props }) => {
   return (
@@ -85,9 +86,7 @@ export default function Register() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
       <div className="w-full max-w-md mb-6">
-        <Link href="/" className="flex items-center space-x-3">
-          <span className="text-xl font-bold text-green-600">RideShare</span>
-        </Link>
+        <Logo imageSize={60} textSize="text-2xl" />
       </div>
 
       <div className="w-full max-w-md space-y-6">

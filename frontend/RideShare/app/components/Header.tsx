@@ -5,6 +5,7 @@ import { Search, User } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
+import Logo from "./Logo";
 
 const Header = () => {
   const router = useRouter();
@@ -24,10 +25,7 @@ const Header = () => {
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center space-x-3">
-            <span className="text-xl font-bold text-green-600">RideShare</span>
-          </Link>
-
+          <Logo />
           <nav className="hidden md:flex items-center space-x-8">
             <Link
               href="/rides"
